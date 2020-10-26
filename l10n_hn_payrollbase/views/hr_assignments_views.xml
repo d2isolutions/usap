@@ -1,0 +1,90 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hr_assignments_view_list">
+            <field name="name">hr.assignments.list</field>
+            <field name="model">hr.assignments</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="contract_id"/>
+                    <field name="name"/>
+                    <field name="dateassig"/>
+                    <field name="type_id"/>
+                    <field name="montoassig"/>
+                    <field name="have_porc"/>
+                    <field name="porc_assig"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_assignments_view_form" model="ir.ui.view">
+            <field name="name">hr.assignments.view.form</field>
+            <field name="model">hr.assignments</field>
+            <field name="arch" type="xml">
+                <form string="hr_assignments_form">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="contract_id"/>
+                                <field name="name"/>
+                                <field name="dateassig"/>
+                                <field name="type_id"/>
+                                <field name="montoassig"/>
+                                <field name="have_porc" />
+                                <field name="porc_assig"  attrs="{'invisible': [('have_porc', '=', False)]}"/>
+                                <field name="amount"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_assignments_view_pivot">
+            <field name="name">hr.assignments.pivot</field>
+            <field name="model">hr.assignments</field>
+            <field name="arch" type="xml">
+                <pivot string="Payment Commissions">
+                    <field name="dateassig" type="row"/>
+                    <field name="employee_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+            <!-- actions opening views on models -->
+    <record id="action_view_l10n_hn_assignments_menu" model="ir.actions.act_window">
+        <field name="name">Pago Asignaciones</field>
+        <field name="res_model">hr.assignments</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- menu categories -->
+
+    <menuitem
+
+        id="l10n_hn_payrollbase.menu_records"
+        name="Registros de pagos"
+        parent="hr_payroll.menu_hr_payroll_root"
+        sequence="71"/>
+
+
+  <menuitem
+        id="menu_hn_assignments_view"
+        action="action_view_l10n_hn_assignments_menu"
+        parent="l10n_hn_payrollbase.menu_records"
+        name="Pago Asignaciones"
+        sequence="01"/>
+
+
+
+
+    </data>
+</odoo>

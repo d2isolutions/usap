@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_l10n_hn_payrollbase_public,l10n_hn.payrollbase,model_l10n_hn_payrollbase,,1,1,1,1
+access_hr_employe_division_public,l10n_hn.hr_employe_division,model_hr_employe_division,,1,1,1,1
+access_hr_commissions,hr_commissions,model_hr_commissions,base.group_user,1,1,1,1
+access_hr_assignments,hr_assignments,model_hr_assignments,base.group_user,1,1,1,1
+access_hr_assignments_type,hr_assignments_type,model_hr_assignments_type,base.group_user,1,1,1,1
+access_hr_deductions,hr_deductions,model_hr_deductions,base.group_user,1,1,1,1
+access_hr_deductions_type,hr_deductions_type,model_hr_deductions_type,base.group_user,1,1,1,1

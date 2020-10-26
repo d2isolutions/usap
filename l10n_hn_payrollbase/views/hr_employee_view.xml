@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <group string="Vacaciones" col="4">
+                        <field name="holidays"/>
+                        <button name="button_holidays" type="object" string="Holidays" class="btn-link"/>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='public']" position="after">
+                    <page string="Planilla de Registro">
+                        <group>
+                            <group string="Información del Pago">
+                                <field name="id" string="Código Empleado"/>
+                                <field name="ref_code"/>
+                                <field name="division_id"/>
+                                <field name="grupo"/>
+                                <field name="date_ing"/>
+                                <field name="date_hist"/>
+                                <field name="antique"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='phone']"  position="after">
+                    <field name="phone"/>
+                    <field name="cellphone"/>
+                </xpath>
+                <xpath expr="//field[@name='birthday']"  position="after">
+                    <field name="age"/>
+                </xpath>
+                <xpath expr="//field[@name='passport_id']"  position="after">
+                    <field name="driverlic"/>
+                    <field name="socialsecurity"/>
+                </xpath>
+                <xpath expr="//field[@name='emergency_contact']"  position="after">
+                    <field name="bloodtype"/>
+                </xpath>
+                <xpath expr="//field[@name='certificate']"  position="replace">
+                    <field name="certificat"/>
+                    <field name="instruction"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

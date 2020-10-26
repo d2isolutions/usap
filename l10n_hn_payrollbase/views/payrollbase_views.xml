@@ -1,0 +1,132 @@
+<odoo>
+  <data>
+
+        
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="payrollbase_list">
+      <field name="name">l10n_hn.payrollbase.list</field>
+      <field name="model">l10n_hn.payrollbase</field>
+      <field name="arch" type="xml">
+        <tree>
+            
+            <field name="name"/>
+            <field name="date"/>
+            <field name="ceiling_salary_eym" />
+            <field name="ceiling_salary_ivm"/>
+            <field name="ceiling_salary_conf"/>
+            <field name="porc_eym" string="( % ) IVM"/>
+            <field name="porc_ivm" string="( % ) EYM"/>
+            <field name="porc_rap" string="( % ) RAP"/>
+            <field name="min_salary" string="Minimum Salary"/>
+
+        </tree>
+      </field>
+    </record>
+    
+    <!-- explicit form view definition -->
+        <record model="ir.ui.view" id="payrollbase_form">
+          <field name="name">l10n_hn.payrollbase.form</field>
+          <field name="model">l10n_hn.payrollbase</field>
+          <field name="arch" type="xml">
+            <form string="Configuración de la ley de Honduras">
+                <sheet>
+                    <field name="name" string="Nombre Configuración:"/>
+                    <notebook>
+                        <page string="Información salarial" name="name">
+                            <group>
+                                 <group>
+                                     <field name="date" string="Fecha"/>
+                                     <field name="min_salary" string="Salario mínimo"/>
+                                     <separator string="Subsidio por Incapacidad"/>
+                                     <field name="sick_days"/>
+                                     <field name="porc_inc" string="% Patronal"/>
+                                 </group>
+                                <group string="Parámetro para el Calculo Comisión Promedio" >
+                                    <field name="averageparameter"/>
+                                    <separator string="Calcular Horas Extras"/>
+                                    <field name="daytime_conf"/>
+                                    <field name="mixtime_conf"/>
+                                    <field name="nighttime_conf"/>
+                                 </group>
+                            </group>
+                            <group>
+                                <group string="Impuesto Rap" >
+                                    <field name="ceiling_salary_conf"/>
+                                    <field name="porc_rap"/>
+                                    <field name="porc_rap_patrono"/>
+                                </group>
+                                <group string="Enfermedad y Maternidad" >
+                                    <field name="ceiling_salary_eym"/>
+                                    <field name="porc_eym"/>
+                                    <field name="porc_eym_patrono"/>
+                                </group>
+                                <group string="Invalidez, vejez y muerte" >
+                                    <field name="ceiling_salary_ivm"/>
+                                    <field name="porc_ivm"/>
+                                    <field name="porc_ivm_patrono"/>
+                                </group>
+                                <group string="Riesgo Profesional Ro/SCL" >
+                                    <field name="ceiling_salary_risk"/>
+                                    <field name="porc_risk_patrono"/>
+                                  </group>
+                            </group>
+                        </page>
+                        <page string="ISR" name="name">
+                            <group string="Parámetro para el cálculo de ISR">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="months"/>
+                                </group>
+                                <group string="Descuento Por Gastos Médicos">
+                                    <field name="age_exp1"/>
+                                    <field name="mdex_exp1"/>
+                                    <field name="age_exp2"/>
+                                    <field name="mdex_exp2"/>
+                                    <field name="age_exp3"/>
+                                    <field name="mdex_exp3"/>
+                                </group>
+                                <group string="1| Base Imponible">
+                                    <field name="porc_islr1"/>
+                                    <field name="basemin1"/>
+                                    <field name="basemax1"/>
+                                </group>
+                                <group string="2| Base Imponible">
+                                    <field name="porc_islr2"/>
+                                    <field name="basemin2"/>
+                                    <field name="basemax2"/>
+                                </group>
+                                <group string="3| Base Imponible">
+                                    <field name="porc_islr3"/>
+                                    <field name="basemin3"/>
+                                    <field name="basemax3"/>
+                                </group>
+                                <group string="4| Base Imponible">
+                                    <field name="porc_islr4"/>
+                                    <field name="basemin4"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+          </field>
+        </record>
+
+    <!-- actions opening views on models -->
+    <record id="action_view_l10n_hn_payrollbase_menu" model="ir.actions.act_window">
+        <field name="name">Configuracion Nomina Honduras</field>
+        <field name="res_model">l10n_hn.payrollbase</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- menu categories -->
+
+      <menuitem
+        id="menu_l10n_hn_payrollbase_view"
+        action="action_view_l10n_hn_payrollbase_menu"
+        parent="hr_payroll.menu_hr_salary_configuration"
+        name="Configuracion Nomina Honduras"
+        sequence="50"/>
+
+  </data>
+</odoo>

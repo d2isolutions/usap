@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--    <data noupdate="1">-->
+
+    <record id="structure_type_employee_honduras" model="hr.payroll.structure.type">
+        <field name="name">HN: Pago Empleados</field>
+        <field name="country_id" ref="base.hn"/>
+    </record>
+
+    <!-- Salary Structure -->
+    <record id="hr_payroll_salary_structure_employe_honduras" model="hr.payroll.structure">
+        <field name="name">HN: Pago Empleados</field>
+        <field name="country_id" ref="base.hn"/>
+        <field name="type_id" ref="structure_type_employee_honduras"/>
+        <field name="regular_pay" eval="True"/>
+    </record>
+
+        <!-- HR SALARY RULES CATEGORY -->
+
+    <record id="honduras_base" model="hr.salary.rule.category">
+        <field name="name">Base</field>
+        <field name="code">BASE</field>
+    </record>
+
+    <record id="honduras_asignaciones" model="hr.salary.rule.category">
+        <field name="name">Asignaciones</field>
+        <field name="code">a2000</field>
+    </record>
+
+    <record id="honduras_asignacionestales" model="hr.salary.rule.category">
+        <field name="name">Asignaciones Totales</field>
+        <field name="code">at2000</field>
+    </record>
+
+    <record id="honduras_deducciones" model="hr.salary.rule.category">
+        <field name="name">Deducciones</field>
+        <field name="code">d3000</field>
+    </record>
+
+    <record id="honduras_deduccionestotales" model="hr.salary.rule.category">
+        <field name="name">Deducciones Totales</field>
+        <field name="code">dt3000</field>
+    </record>
+
+    <!-- assignments rules -->
+    <function model="hr.salary.rule" name="write">
+        <value model="hr.salary.rule" search="[
+            ('struct_id', '=', ref('l10n_hn_payrollbase.hr_payroll_salary_structure_employe_honduras')),
+            ('code', '=', 'BASIC')]"/>
+        <value eval="{
+            'name': 'Salario Basico',
+            'code': 'BASICO',
+            'sequence': 1000,
+            'category_id': ref('hr_payroll.BASIC'),
+            'amount_python_compute': 'result = payslip.computo_salario',
+            }"/>
+    </function>
+
+    <record id="rule_employee_salariocontrato" model="hr.salary.rule">
+        <field name="name">Salario Contrato</field>
+        <field name="code">Base</field>
+        <field name="sequence">1001</field>
+        <field name="category_id" ref="honduras_base"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_bruto</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+    <record id="rule_employee_ausencias" model="hr.salary.rule">
+        <field name="name">Ausencias</field>
+        <field name="code">Base</field>
+        <field name="sequence">1002</field>
+        <field name="category_id" ref="honduras_base"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_ausencias</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_commission" model="hr.salary.rule">
+        <field name="name">Comision del Mes</field>
+        <field name="code">A001</field>
+        <field name="sequence">2100</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_commission</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+    <record id="rule_employee_minimo" model="hr.salary.rule">
+        <field name="name">Ajuste Salario Minimo</field>
+        <field name="code">A002</field>
+        <field name="sequence">2200</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_ajuste</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+    <record id="rule_employee_incapacidad" model="hr.salary.rule">
+        <field name="name">Incapacidad</field>
+        <field name="code">A003</field>
+        <field name="sequence">2300</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_incapacidad</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+    <record id="rule_employee_incapacidad_bono" model="hr.salary.rule">
+        <field name="name">Bono por Incapacidad</field>
+        <field name="code">A004</field>
+        <field name="sequence">2400</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_incabono</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_extrahours" model="hr.salary.rule">
+        <field name="name">Horas Extras</field>
+        <field name="code">A005</field>
+        <field name="sequence">2500</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_extrahours</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_assignments" model="hr.salary.rule">
+        <field name="name">Otras Asignaciones</field>
+        <field name="code">A006</field>
+        <field name="sequence">2600</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result =  payslip.computo_assignments</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_feriados" model="hr.salary.rule">
+        <field name="name">Días Feriados Laborados</field>
+        <field name="code">A007</field>
+        <field name="sequence">2700</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result =  payslip.computo_feriados</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+    <record id="rule_employee_holidays" model="hr.salary.rule">
+        <field name="name">Vacaciones</field>
+        <field name="code">A008</field>
+        <field name="sequence">2800</field>
+        <field name="category_id" ref="honduras_asignaciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_holidays</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+
+    <!-- deductions rules -->
+
+    <record id="rule_employee_isr" model="hr.salary.rule">
+        <field name="name">ISR</field>
+        <field name="code">D001</field>
+        <field name="sequence">3100</field>
+        <field name="category_id" ref="honduras_deducciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_isr</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_ivm" model="hr.salary.rule">
+        <field name="name">IHSS - IVM</field>
+        <field name="code">D002</field>
+        <field name="sequence">3200</field>
+        <field name="category_id" ref="honduras_deducciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_ivm</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_eym" model="hr.salary.rule">
+        <field name="name">IHSS - EYM</field>
+        <field name="code">D003</field>
+        <field name="sequence">3300</field>
+        <field name="category_id" ref="honduras_deducciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_eym</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_rap" model="hr.salary.rule">
+        <field name="name">RAP</field>
+        <field name="code">D004</field>
+        <field name="sequence">3400</field>
+        <field name="category_id" ref="honduras_deducciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_rap</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_otherdeductions" model="hr.salary.rule">
+        <field name="name">Otras Deduciones</field>
+        <field name="code">D005</field>
+        <field name="sequence">3600</field>
+        <field name="category_id" ref="honduras_deducciones"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = payslip.computo_deductions</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <!-- Totals -->
+
+    <record id="rule_employee_asignaciones_totales" model="hr.salary.rule">
+        <field name="name">Asignaciones Totales</field>
+        <field name="sequence">4000</field>
+        <field name="code">TA400</field>
+        <field name="category_id" ref="honduras_asignacionestales"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.a2000</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <record id="rule_employee_deduciones_totales" model="hr.salary.rule">
+        <field name="name">Deduciones Totales</field>
+        <field name="sequence">5000</field>
+        <field name="code">TD500</field>
+        <field name="category_id" ref="honduras_deduccionestotales"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.d3000</field>
+        <field name="struct_id" ref="hr_payroll_salary_structure_employe_honduras"/>
+    </record>
+
+    <function model="hr.salary.rule" name="write">
+        <value model="hr.salary.rule" search="[
+            ('struct_id', '=', ref('l10n_hn_payrollbase.hr_payroll_salary_structure_employe_honduras')),
+            ('code', '=', 'GROSS')]"/>
+        <value eval="{
+            'name': 'Salario Bruto',
+            'code': 'BRUTO',
+            'sequence': 6000,
+            'category_id': ref('hr_payroll.GROSS'),
+            'amount_python_compute': 'result = (payslip.computo_salario + categories.at2000)',
+            }"/>
+    </function>
+
+    <function model="hr.salary.rule" name="write">
+        <value model="hr.salary.rule" search="[
+            ('struct_id', '=', ref('l10n_hn_payrollbase.hr_payroll_salary_structure_employe_honduras')),
+            ('code', '=', 'NET')]"/>
+        <value eval="{
+            'name': 'Salario Neto',
+            'code': 'NET',
+            'sequence': 100000,
+            'category_id': ref('hr_payroll.NET'),
+            'amount_python_compute': 'result = BRUTO - categories.dt3000',
+            }"/>
+    </function>
+    </data>
+</odoo>

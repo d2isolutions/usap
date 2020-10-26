@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="category_nuevo_a" model="hr.employee.category">
+            <field name="name">N/A Antigüedad</field>
+        </record>
+        <record id="category_antique_b" model="hr.employee.category">
+            <field name="name">01 Antigüedad</field>
+        </record>
+        <record id="category_antique_c" model="hr.employee.category">
+            <field name="name">02 Antigüedad</field>
+        </record>
+        <record id="category_antique_d" model="hr.employee.category">
+            <field name="name">03 Antigüedad</field>
+        </record>
+        <record id="category_antique_e" model="hr.employee.category">
+            <field name="name">04 Antigüedad o más</field>
+        </record>
+
+    </data>
+
+</odoo>

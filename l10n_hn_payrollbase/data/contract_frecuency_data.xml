@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="frequency_daily" model="payment.frequency">
+            <field name="name">Diario</field>
+        </record>
+        <record id="frequency_weekly" model="payment.frequency">
+            <field name="name">Semanal</field>
+        </record>
+        <record id="frequency_biweekly" model="payment.frequency">
+            <field name="name">Quincenal</field>
+        </record>
+        <record id="frequency_monthly" model="payment.frequency">
+            <field name="name">Mensual</field>
+        </record>
+
+
+    </data>
+
+</odoo>

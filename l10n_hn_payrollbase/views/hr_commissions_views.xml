@@ -1,0 +1,75 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="hr_commissions_view_list">
+            <field name="name">hr.commissions.list</field>
+            <field name="model">hr.commissions</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="contract_id"/>
+                    <field name="name"/>
+                    <field name="datecomisiones"/>
+                    <field name="mescomisiones"/>
+                    <field name="montocommission"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_commissions_view_form" model="ir.ui.view">
+            <field name="name">hr.commissions.view.form</field>
+            <field name="model">hr.commissions</field>
+            <field name="arch" type="xml">
+                <form string="hr_paymentcommissions_form">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="contract_id"/>
+                                <field name="name"/>
+                                <field name="datecomisiones"/>
+                                <field name="mescomisiones"/>
+                                <field name="montocommission"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_commissions_view_pivot">
+            <field name="name">hr.commissions.pivot</field>
+            <field name="model">hr.commissions</field>
+            <field name="arch" type="xml">
+                <pivot string="Payment Commissions">
+                    <field name="datecomisiones" type="row"/>
+                    <field name="employee_id" type="row"/>
+                    <field name="montocommission" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+        <record id="action_view_hr_commissions_menu" model="ir.actions.act_window">
+            <field name="name">Pago Comisiones</field>
+            <field name="res_model">hr.commissions</field>
+            <field name="view_mode">tree,form,pivot</field>
+        </record>
+
+        <!-- menu categories -->
+
+          <menuitem
+            id="menu_hr_commissions_view"
+            action="action_view_hr_commissions_menu"
+            parent="l10n_hn_payrollbase.menu_records"
+            name="Pago Comisiones"
+            sequence="10"/>
+
+
+    </data>
+</odoo>

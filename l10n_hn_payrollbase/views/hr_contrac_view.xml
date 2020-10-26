@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_hr_contrac_isr_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.isr.view.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']"  position="after">
+                    <field name="contract_type"/>
+                </xpath>
+                <xpath expr="//page[@name='information']" position="after">
+                    <page string="Información del Pago">
+                        <group>
+                            <group>
+                                <separator string="Información del Ley"/>
+                                <field name="payrollbase_id"/>
+                                <field name="division_id"/>
+                                <field name="frequency"/>
+                                <field name="afp"/>
+                                <field name="age"/>
+                                <field name="formmedexpenses"/>
+                            </group>
+                            <group>
+                                <separator string="Información del Pago"/>
+                                <field name="havecommission"/>
+                                <field name="averageparameter"  attrs="{'invisible': [('havecommission', '=', False)]}"/>
+                                <field name="lastcommission" attrs="{'invisible': [('havecommission', '=', False)]}"/>
+                                <field name="averagecommission" attrs="{'invisible': [('havecommission', '=', False)]}"/>
+                            </group>
+                            <separator string="Información de las Comisiones" attrs="{'invisible': [('havecommission', '=', False)]}"/>
+                            <field name="commissions_ids" attrs="{'invisible': [('havecommission', '=', False)]}"/>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

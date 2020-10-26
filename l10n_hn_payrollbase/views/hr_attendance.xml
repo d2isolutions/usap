@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_work_entry_type_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.work.entry.type.view.form.inherit</field>
+            <field name="model">hr.work.entry.type</field>
+            <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']"  position="after">
+                    <separator string="Ausencias"/>
+                    <field name="honduras_disc"/>
+                    <separator string="Incapacidad"/>
+                    <field name="honduras_law_bond"/>
+                    <separator string="Feriados"/>
+                    <field name="natholidays"/>
+                    <separator string="Horas Extras"/>
+                    <field name="daytime"/>
+                    <field name="mixtime"/>
+                    <field name="nighttime"/>
+                    <separator string="Vacaciones"/>
+                    <field name="holidays"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
