@@ -117,12 +117,14 @@ class Hrpayslip(models.Model):
                 if line.work_entry_type_id.honduras_law_bond == True:
                     if line.number_of_days <= record.payrollbase_id.sick_days :
                         record.computo_incapacidad = ((record.payrollbase_id.ceiling_salary_eym/30) * line.number_of_days)
+                        #print('record.computo_incapacidad', record.computo_incapacidad)
                         # Calcular Incapacidad Menor a tres dias
                     elif line.number_of_days > record.payrollbase_id.sick_days:
                         diasrestante = (line.number_of_days - record.payrollbase_id.sick_days)
                         ptresd = ((record.payrollbase_id.ceiling_salary_eym/30) * record.payrollbase_id.sick_days)
                         pmasd = (((record.payrollbase_id.ceiling_salary_eym/30) * record.payrollbase_id.porc_inc) * diasrestante)
                         record.computo_incapacidad = (ptresd + pmasd)
+                        #print('record.computo_incapacidad', record.computo_incapacidad)
                         # Calcular Incapacidad Mayor a tres dias
             return record.computo_incapacidad
 
@@ -132,7 +134,7 @@ class Hrpayslip(models.Model):
         for record in self:
             for line in record.worked_days_line_ids:
                 if line.work_entry_type_id.honduras_law_bond == True:
-                    if line.number_of_days > 1:
+                    if line.number_of_days > 0:
                         valordia = (record.contract_id.wage / 30)
                         montodias = line.number_of_days * valordia
                         bono = (montodias - record.computo_incapacidad)
@@ -193,7 +195,13 @@ class Hrpayslip(models.Model):
             paid_amount = record.contract_id.wage
             semanal = record.contract_id.wage / 4
             quincenal = record.contract_id.wage / 2
-            asignaciones = (record.computo_assignments + record.computo_assignments)
+            asignaciones = (record.computo_salario +
+                         record.computo_commission +
+                         record.computo_assignments +
+                         record.computo_holidays +
+                         record.computo_incapacidad +
+                         record.computo_incabono +
+                         record.computo_feriados )
             frequency = record.contract_id.frequency
             if (paid_amount + asignaciones) < record.payrollbase_id.min_salary:
                 if frequency == '02':
